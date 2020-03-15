@@ -79,4 +79,55 @@ router.get('/resume', (req, res) => {
 });
 
 
+
+///// Show One of User Resumes /////
+router.get('/resume/:id', (req, res) => {
+    // find a user based on the token 
+    User.findOne({
+            $and: [{
+                    token: req.headers.token
+                },
+                {
+                    resume: req.params.id
+                }
+            ]
+        })
+        .then(record => {
+            if (!record) {
+                res.status(401).json({
+                    error: {
+                        name: 'Unauthorized',
+                        message: 'The provided cridintials are not valid for this operation'
+                    }
+                });
+            } else {
+                Resume.findById(req.params.id)
+                    .then((resume) => {
+                        if (resume) {
+                            res.status(200).json({
+                                resume: resume
+                            });
+
+                        } else {
+                            // If we couldn't find a document with the matching ID
+                            res.status(404).json({
+                                error: {
+                                    name: 'DocumentNotFoundError',
+                                    message: 'The provided ID doesn\'t match any documents'
+                                }
+                            });
+                        }
+                    })
+            }
+        })
+        // Catch any errors that might occur
+        .catch((error) => {
+            res.status(500).json({
+                error: error
+            });
+        })
+});
+
+
+
 module.exports = router
