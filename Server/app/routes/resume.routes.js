@@ -6,7 +6,7 @@ const Resume = require('../models/resume.model')
 
 const router = express.Router();
 
-///// Add New Resume to User Acaount /////
+///// Add New Resume to User Account /////
 router.post('/resume', (req, res) => {
 
     let user;
@@ -20,7 +20,7 @@ router.post('/resume', (req, res) => {
             }
             user = record
         });
-
+    //create new resume
     Resume.create(req.body)
         .then((newResume) => {
             user.resume.push(newResume._id)
@@ -29,7 +29,7 @@ router.post('/resume', (req, res) => {
                 "newResume": newResume
             });
         })
-
+        // Catch any errors that might occur
         .catch((error) => {
             res.status(500).json({
                 error: error
@@ -38,6 +38,45 @@ router.post('/resume', (req, res) => {
 });
 
 
+///// Show all User Resumes /////
+router.get('/resume', (req, res) => {
+    // find a user based on the token 
+    User.findOne({
+            token: req.headers.token
+        })
+        .then(record => {
+            if (!record) {
+                res.status(401).json({
+                    error: {
+                        name: 'Unauthorized',
+                        message: 'The provided cridintials are not valid for this operation'
+                    }
+                });
+            } else {
+                console.log(record.resume);
+                
+
+                Resume.find({_id:
+                    {$in: record.resume}})
+                    // Return all Resume as an Array
+                    .then((resume) => {
+                        console.log(resume);
+                        
+                        res.status(200).json({
+                            resume: resume
+                        });
+                    })
+
+            }
+            user = record
+        })
+        // Catch any errors that might occur
+        .catch((error) => {
+            res.status(500).json({
+                error: error
+            });
+        });
+});
 
 
 module.exports = router
