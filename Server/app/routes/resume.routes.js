@@ -130,4 +130,64 @@ router.get('/resume/:id', (req, res) => {
 
 
 
+///// Delete a Resume From User Acaount /////
+router.delete('/resume/:id', (req, res) => {
+    let user;
+  // find a user based on the token 
+    User.findOne({
+            $and: [{
+                    token: req.headers.token
+                },
+                {
+                    resume: req.params.id
+                }
+            ]
+        })
+
+        .then(record => {
+            console.log(record);
+            if (!record) {
+                res.status(401).json({
+                    error: {
+                        name: 'Unauthorized',
+                        message: 'The provided cridintials are not valid for this operation'
+                    }
+                });
+            } else {
+                user = record;
+                Resume.findById(req.params.id)
+                    .then((resume) => {
+                        if (resume) {
+                            // Pass the result of Mongoose's `.delete` method to the next `.then`
+                            user.resume.splice(user.resume.indexOf((req.params.id, 0), 1))
+                            user.save()
+                            return resume.remove();
+                        } else {
+                            // If we couldn't find a document with the matching ID
+                            res.status(404).json({
+                                error: {
+                                    name: 'DocumentNotFoundError',
+                                    message: 'The provided ID Doesn\'t match any documents'
+                                }
+                            });
+                        }
+                    })
+                    .then(() => {
+                        // If the deletion succeeded, return 204 and no JSON
+                        res.status(204).end();
+                    })
+            }
+        })
+
+        // Catch any errors that might occur
+        .catch((error) => {
+            res.status(500).json({
+                error: error
+            });
+        });
+});
+
+
+
+
 module.exports = router
