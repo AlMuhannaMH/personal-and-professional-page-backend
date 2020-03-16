@@ -5,7 +5,10 @@ const Schema = mongoose.Schema;
 const ProfileSchema = new mongoose.Schema(
     {
         basics: {
-            name: String,
+            username: {
+                type: String,
+                required: true,
+            },
             label: String,
             picture: String,
             email: String,
