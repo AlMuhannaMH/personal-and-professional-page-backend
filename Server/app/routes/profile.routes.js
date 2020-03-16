@@ -83,14 +83,14 @@ router.get('/profile', (req, res) => {
 
 
 ///// Show One of User Profiles /////
-router.get('/profile/:id', (req, res) => {
+router.get('/profile/username', (req, res) => {
     // find a user based on the token 
     User.findOne({
         $and: [{
             token: req.headers.token
         },
         {
-            profile: req.params.id
+            profile: req.params.username
         }
         ]
     })
