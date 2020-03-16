@@ -8,26 +8,17 @@ const ProfileSchema = new mongoose.Schema(
             username: {
                 type: String,
                 required: true,
+                unique: true
             },
             label: String,
-            picture: String,
             email: String,
             phone: Number,
             website: String,
             summary: String,
-            profiles: [{
-                network: String,
-                username: String,
-                url: String,
-            }]
+            network: String,
+            url: String,
         },
-        //user object Schema
-        user: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'User'
-            }
-        ],
+
     },
     { timestamps: true }
 );

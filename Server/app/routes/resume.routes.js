@@ -16,18 +16,25 @@ router.post('/resume', (req, res) => {
     })
         .then(record => {
             if (!record) {
-                throw new BadCredentialsError()
+                res.status(401).json({
+                    error: {
+                        name: 'Unauthorized',
+                        message: 'The provided cridintials are not valid for this operation'
+                    } 
+                })
             }
-            user = record
-        });
-    //create new resume
-    Resume.create(req.body)
-        .then((newResume) => {
-            user.resume.push(newResume._id)
-            user.save()
-            res.status(201).json({
-                "newResume": newResume
-            });
+            else{
+                user = record
+                //create new resume
+                Resume.create(req.body)
+                .then((newResume) => {
+                    user.resume.push(newResume._id)
+                    user.save()
+                    res.status(201).json({
+                        "newResume": newResume
+                    });
+                })
+            } 
         })
         // Catch any errors that might occur
         .catch((error) => {
@@ -82,7 +89,7 @@ router.get('/resume', (req, res) => {
 
 
 
-///// Show One of User Resumes /////
+///// Show One of User's Resume /////
 router.get('/resume/:id', (req, res) => {
     // find a user based on the token 
     User.findOne({
