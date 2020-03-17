@@ -163,14 +163,18 @@ describe('Users', () => {
 
   describe('PATCH /change-password', () => {
     const changePwParams = {
-      passwords: {
+      userNewInfo: {
+        firstName: 'Lama',
+        lastName: 'Ahmed',
+        label: 'SEI',
+        phone: '058123894',
         old: user.credentials.password,
         new: '54321'
       }
     }
 
     const badChangePwParams = {
-      passwords: {
+      userNewInfo: {
         old: 'WRONG',
         new: '54321'
       }
@@ -191,7 +195,7 @@ describe('Users', () => {
       chai.request(server)
         .patch('/change-password')
         .set('Authorization', `Bearer ${token}`)
-        .send({ passwords: { old: '54321', new: '' } })
+        .send({ userNewInfo: { old: '54321', new: '' } })
         .end((e, res) => {
           res.should.have.status(422)
           done()
