@@ -28,19 +28,6 @@ const ResumeSchema = new mongoose.Schema(
             gpa: Number,
             summary: { type: String },
         }],
-        awards: [{
-            title: { type: String },
-            date: { type: Date },
-            awarder: { type: String },
-            summary: { type: String },
-        }],
-        publications: [{
-            name: { type: String },
-            publisher: { type: String },
-            releaseDate: { type: Date },
-            website: { type: String },
-            summary: { type: String },
-        }],
         skills: [{
             name: { type: String },
             level: { type: String },
@@ -48,9 +35,6 @@ const ResumeSchema = new mongoose.Schema(
         languages: [{
             language: { type: String },
             fluency: { type: String }
-        }],
-        interests: [{
-            name: { type: String },
         }],
     },
     { timestamps: true }
