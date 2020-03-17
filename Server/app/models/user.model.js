@@ -9,6 +9,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  label: {
+    type: String,
+  },
+  phone: {
+    type: Number,
+  },
   email: {
     type: String,
     required: true,
@@ -26,22 +37,22 @@ const userSchema = new mongoose.Schema({
     }
   ],
   profile:
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Profile'
-    },
+  {
+    type: Schema.Types.ObjectId,
+    ref: 'Profile'
+  },
   token: String
 },
- {
-  timestamps: true,
-  toObject: {
-    // remove `hashedPassword` field when we call `.toObject`
-    transform: (_doc, user) => {
-      delete user.hashedPassword
-      return user
+  {
+    timestamps: true,
+    toObject: {
+      // remove `hashedPassword` field when we call `.toObject`
+      transform: (_doc, user) => {
+        delete user.hashedPassword
+        return user
+      }
     }
-  }
-})
+  })
 
 userSchema.virtual('examples', {
   ref: 'Example',
