@@ -36,11 +36,6 @@ const userSchema = new mongoose.Schema({
       ref: 'Resume'
     }
   ],
-  profile:
-  {
-    type: Schema.Types.ObjectId,
-    ref: 'Profile'
-  },
   token: String
 },
   {
