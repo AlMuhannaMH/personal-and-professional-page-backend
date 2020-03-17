@@ -70,13 +70,8 @@ router.post("/sign-in", (req, res, next) => {
   const pw = req.body.credentials.password;
   let user;
 
-  // find a user based on the usernameOrEmail that was passed
-  User.findOne({
-    $or: [
-      { username: req.body.credentials.usernameOrEmail },
-      { email: req.body.credentials.usernameOrEmail }
-    ]
-  })
+  // find a user based on the username that was passed
+  User.findOne({ username: req.body.credentials.username })
     .then(record => {
       // if we didn't find a user with that usernameOrEmail, send 401
       if (!record) {
