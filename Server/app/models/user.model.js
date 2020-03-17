@@ -25,8 +25,14 @@ const userSchema = new mongoose.Schema({
       ref: 'Resume'
     }
   ],
+  profile:
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Profile'
+    },
   token: String
-}, {
+},
+ {
   timestamps: true,
   toObject: {
     // remove `hashedPassword` field when we call `.toObject`

@@ -16,18 +16,25 @@ router.post('/profile', (req, res) => {
     })
         .then(record => {
             if (!record) {
-                throw new BadCredentialsError()
+                res.status(401).json({
+                    error: {
+                        name: 'Unauthorized',
+                        message: 'The provided cridintials are not valid for this operation'
+                    } 
+                })
             }
-            user = record
-        });
-    //create new profile
-    Profile.create(req.body)
-        .then((newProfile) => {
-            user.profile.push(newProfile._id)
-            user.save()
-            res.status(201).json({
-                "newProfile": newProfile
-            });
+            else{
+                user = record
+                //create new resume
+                Profile.create(req.body)
+                .then((newProfile) => {
+                    user.profile = newProfile._id
+                    user.save()
+                    res.status(201).json({
+                        "newProfile": newProfile
+                    });
+                })
+            } 
         })
         // Catch any errors that might occur
         .catch((error) => {
@@ -82,15 +89,15 @@ router.get('/profile', (req, res) => {
 
 
 
-///// Show One of User Profiles /////
-router.get('/profile/username', (req, res) => {
+///// Show One of User's Profile /////
+router.get('/profile/:id', (req, res) => {
     // find a user based on the token 
     User.findOne({
         $and: [{
             token: req.headers.token
         },
         {
-            profile: req.params.username
+            profile: req.params.id
         }
         ]
     })
@@ -161,8 +168,6 @@ router.delete('/profile/:id', (req, res) => {
                     .then((profile) => {
                         if (profile) {
                             // Pass the result of Mongoose's `.delete` method to the next `.then`
-                            user.profile.splice(user.profile.indexOf((req.params.id, 0), 1))
-                            user.save()
                             return profile.remove();
                         } else {
                             // If we couldn't find a document with the matching ID
@@ -215,5 +220,10 @@ router.patch('/profile/: id', (req, res) => {
             res.status(500).json({ error: error });
         });
 });
+
+// /profile/{username}
+
+// /profile/{username}
+
 
 module.exports = router
