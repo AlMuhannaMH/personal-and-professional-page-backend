@@ -14,6 +14,9 @@ const user = {
   credentials: {
     firstName: 'Mohammed',
     lastName: 'AlMuhanna',
+    username: 'AlMuhannaMH',
+    label: 'Software Engineer',
+    phone: '058123843',
     email: 'foo@bar.baz',
     password: '12345',
     password_confirmation: '12345'
@@ -31,6 +34,9 @@ const nonMatchingPasswordsUser = {
   credentials: {
     firstName: 'Hamad',
     lastName: 'AlMuhanna',
+    username: 'AlMuhannaMH',
+    label: 'Software Engineer',
+    phone: '058123843',
     email: 'dont@type.good',
     password: '12345',
     password_confirmation: '54321'
@@ -65,7 +71,7 @@ describe('Users', () => {
     it('should reject an empty string name', done => {
       chai.request(server)
         .post('/sign-up')
-        .send(Object.assign({}, user.credentials, { firstName: '', lastName: '' }))
+        .send(Object.assign({}, user.credentials, { firstName: '', lastName: '', username: '' }))
         .end((e, res) => {
           res.should.have.status(422)
           res.should.be.a('object')
