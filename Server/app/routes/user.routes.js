@@ -105,8 +105,8 @@ router.post("/sign-in", (req, res, next) => {
 });
 
 // CHANGE password
-// PATCH /change-password
-router.patch("/change-password", requireToken, (req, res, next) => {
+// PATCH /update-info
+router.patch("/update-info", requireToken, (req, res, next) => {
   let user;
   // `req.user` will be determined by decoding the token payload
   User.findById(req.user.id)
@@ -115,20 +115,24 @@ router.patch("/change-password", requireToken, (req, res, next) => {
       user = record;
     })
     // check that the old password is correct
-    .then(() => bcrypt.compare(req.body.passwords.old, user.hashedPassword))
+    .then(() => bcrypt.compare(req.body.userNewInfo.old, user.hashedPassword))
     // `correctPassword` will be true if hashing the old password ends up the
     // same as `user.hashedPassword`
     .then(correctPassword => {
       // throw an error if the new password is missing, an empty string,
       // or the old password was wrong
-      if (!req.body.passwords.new || !correctPassword) {
+      if (!req.body.userNewInfo.new || !correctPassword) {
         throw new BadParamsError();
       }
     })
     // hash the new password
-    .then(() => bcrypt.hash(req.body.passwords.new, bcryptSaltRounds))
+    .then(() => bcrypt.hash(req.body.userNewInfo.new, bcryptSaltRounds))
     .then(hash => {
       // set and save the new hashed password in the DB
+      user.firstName = req.body.userNewInfo.firstName;
+      user.lastName = req.body.userNewInfo.lastName;
+      user.label = req.body.userNewInfo.label;
+      user.phone = req.body.userNewInfo.phone;
       user.hashedPassword = hash;
       return user.save();
     })
