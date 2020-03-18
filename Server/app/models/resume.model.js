@@ -26,6 +26,7 @@ const ResumeSchema = new mongoose.Schema({
 
     skillsName: { type: String },
     skillsLevel: { type: String },
+
     languageName: { type: String },
     languageFluency: { type: String }
 
