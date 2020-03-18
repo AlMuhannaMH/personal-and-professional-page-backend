@@ -1,7 +1,7 @@
 {
   "name": "personal-and-professional-page-server",
   "version": "0.0.1",
-  "description": "",
+  "description": "GA-project3",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -11,7 +11,7 @@
     "s": "nodemon server.js",
     "debug-server": "DEBUG=express:* nodemon server.js"
   },
-  "author": "",
+  "author": "apollo-team",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -32,7 +32,19 @@
     "nodemon": "^2.0.2"
   },
   "engines": {
-    "node": "10.15.0",
-    "npm": "6.4.1"
-  }
+    "node": "12.15.0",
+    "npm": "6.13.1"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlMuhannaMH/personal-and-professional-page-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlMuhannaMH/personal-and-professional-page-backend/issues"
+  },
+  "homepage": "https://github.com/AlMuhannaMH/personal-and-professional-page-backend#readme"
 }
