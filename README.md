@@ -1,5 +1,4 @@
 # personal-and-professional-page-backend
-# Warehouse-Solution
 
 ## Overview
 
