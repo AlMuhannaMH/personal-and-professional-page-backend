@@ -63,7 +63,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(requestLogger)
 
 // register route files
-app.use(resumeRoutes)
+app.use(resumeRoutes);
 app.use(userRoutes)
 
 // register error handling middleware
