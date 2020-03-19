@@ -27,7 +27,7 @@ const router = express.Router();
 
 // SIGN UP
 // POST /sign-up
-router.post("/sign-up", (req, res, next) => {
+router.post("/api/sign-up", (req, res, next) => {
   // start a promise chain, so that any errors will pass to `handle`
   Promise.resolve(req.body.credentials)
     // reject any requests where `credentials.password` is not present, or where
@@ -66,7 +66,7 @@ router.post("/sign-up", (req, res, next) => {
 
 // SIGN IN
 // POST /sign-in
-router.post("/sign-in", (req, res, next) => {
+router.post("/api/sign-in", (req, res, next) => {
   const pw = req.body.credentials.password;
   let user;
 
@@ -106,7 +106,7 @@ router.post("/sign-in", (req, res, next) => {
 
 // CHANGE password
 // PATCH /update-info
-router.patch("/update-info", requireToken, (req, res, next) => {
+router.patch("/api/update-info", requireToken, (req, res, next) => {
   let user;
   // `req.user` will be determined by decoding the token payload
   User.findById(req.user.id)
@@ -142,7 +142,7 @@ router.patch("/update-info", requireToken, (req, res, next) => {
     .catch(next);
 });
 
-router.delete("/sign-out", requireToken, (req, res, next) => {
+router.delete("/api/sign-out", requireToken, (req, res, next) => {
   // create a new random token for the user, invalidating the current one
   req.user.token = crypto.randomBytes(16);
   // save the token and respond with 204
@@ -153,7 +153,7 @@ router.delete("/sign-out", requireToken, (req, res, next) => {
 });
 
 ///// Show One of User's Resume /////
-router.get('/profile/:username', (req, res) => {
+router.get('/api/profile/:username', (req, res) => {
   User.findOne({ username: new RegExp('^' + req.params.username + '$', "i") })
     .then((profile) => {
       if (profile) {
@@ -188,7 +188,7 @@ router.get('/profile/:username', (req, res) => {
 * URI:          /users/5d664b8b68b4f5092aba18e9
 * Description:  Delete An Article by Article ID
 */
-router.delete('/deleteUserProfile/:id', (req, res) => {
+router.delete('/api/deleteUserProfile/:id', (req, res) => {
   User.findById(req.params.id)
     .then((user) => {
       if (user) {

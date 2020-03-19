@@ -2,7 +2,7 @@
 const express = require('express');
 
 // Require Mongoose Model for Resume
-const Resume = require('../models/resume');
+const Resume = require('../models/resume.model');
 
 // Instantiate a Router (mini app that only handles routes)
 const router = express.Router();
