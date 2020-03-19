@@ -31,46 +31,15 @@ It is a Full-Stack MERN web application that allow user to have a personal page 
 - cors.
 - postman.
 - draw.io.
--Axios.
+- Axios.
 - Trello.
 
 
 #### UseCase and UML
 
-![Wireframe](UML1.png)
-![Wireframe](UML.png)
 
 ### Wireframes
 
-The first wireframes plan as well as the some of logic that the project has.
-
-<p align="center">
-  <img alt="UI1" src="https://github.com/AlMuhannaMH/Warehouse-Solution/blob/master/src/images/Wireframes01.jpg">
-</p>
-
-The login UI.
-
-<p align="center">
-  <img alt="UI2" src="https://github.com/AlMuhannaMH/Warehouse-Solution/blob/master/src/images/UI01.png">
-</p>
-
-The new material request UI.
-
-<p align="center">
-  <img alt="UI3" src="https://github.com/AlMuhannaMH/Warehouse-Solution/blob/master/src/images/UI02.png">
-</p>
-
-The material Request Ordr History and the update material request order
-
-<p align="center">
-  <img alt="UI4" src="https://github.com/AlMuhannaMH/Warehouse-Solution/blob/master/src/images/UI03.png">
-</p>
-
-The Help page.
-
-<p align="center">
-  <img alt="UI5" src="https://github.com/AlMuhannaMH/Warehouse-Solution/blob/master/src/images/UI04.png">
-</p>
 
 ---
 
